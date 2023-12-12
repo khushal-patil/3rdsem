@@ -19,7 +19,7 @@ def sentinel_search(arr, n, key):
 def binary_search(roll_numbers, target):
     left, right = 0, len(roll_numbers) - 1
     while left <= right:
-        mid = left + (right - left) // 2
+        mid = (left + right) // 2
         if roll_numbers[mid] == target:
             return True
         elif roll_numbers[mid] < target:
@@ -40,6 +40,7 @@ def fibonacci_search(roll_numbers, target):
     fibonacci = generate_fibonacci_sequence(n)
 
     offset = -1
+
     while fibonacci:
         i = min(offset + fibonacci[-2], n - 1)
         if roll_numbers[i] == target:
