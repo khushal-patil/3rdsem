@@ -28,8 +28,8 @@ int main()
         line(35 + i, 310, 50 + i, 330); // right hand
         line(50 + i, 330, 50 + i, 280); // umbrella stick
         line(15 + i, 280, 85 + i, 280); // umbrella bottom
-        arc(50 + i, 280, 360, 180, 35);   // umbrella body
-        arc(55 + i, 330, 180, 0, 5);  // umbrella handle
+        arc(50 + i, 280, 180, 0, 35);   // umbrella body
+        arc(55 + i, 330, 0, 180, 5);  // umbrella handle
         rhx = getmaxx();
         rhy = getmaxy();
         for (j = 0; j < 5; j++)

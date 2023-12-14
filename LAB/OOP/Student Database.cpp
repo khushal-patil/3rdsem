@@ -1,123 +1,195 @@
 #include <iostream>
-#include <cstring>
+#include <string>
 
 using namespace std;
 
-class PersonClass
+class College
 {
 private:
-    char name[40], clas[10], div[2], dob[15], bloodgrp[5];
-    int roll;
+    int roll_no;
+    string cls;
+    string division;
 
 public:
-    static int count; // static data
-    friend class PersonnelClass;
-    
-    PersonClass() : roll(0) {}
+    static int strength;
+    friend class Student;
 
-    static void TotalRecordCount() // static method
+    College()
     {
-        cout << "\nTOTAL NUMBER OF RECORDS CREATED : " << count<<endl;
+        roll_no = 0;
+        cls = "";
+        division = "";
+    }
+
+    void display()
+    {
+        cout << "Roll no:" << roll_no << endl;
+        cout << "Class :" << cls << endl;
+        cout << "Division:" << division << endl;
+    }
+
+    static void increment()
+    {
+        strength += 1;
+    }
+
+    static void decrement()
+    {
+        strength -= 1;
+    }
+
+    void getdatac()
+    {
+        cout << "Enter Roll no :";
+        cin >> roll_no;
+        cout << "Enter Class :";
+        cin >> cls;
+        cout << "Enter Division :";
+        cin >> division;
     }
 };
 
-class PersonnelClass
+int College::strength = 0;
+
+class Student
 {
 private:
-    char address[30], telephone_no[15], policy_no[10], license_no[10];
+    string dob, name, bgrp;
+    string contact_Address;
+    long long int telephone_no;
+    string drivingLicenseNo;
 
 public:
-    PersonnelClass() : address(""), telephone_no(""), policy_no(""), license_no("") {}
+    College c;
 
-    void InputData(PersonClass *obj);
-    void DisplayData(PersonClass *obj);
-    friend class PersonClass;
+    Student()
+    {
+        dob = "";
+        bgrp = "";
+        contact_Address = "";
+        telephone_no = 0;
+        drivingLicenseNo = "";
+    }
+
+    Student(const Student &other)
+    {
+        dob = other.dob;
+        bgrp = other.bgrp;
+        contact_Address = other.contact_Address;
+        telephone_no = other.telephone_no;
+        drivingLicenseNo = other.drivingLicenseNo;
+        c = other.c;
+    }
+
+    int rollNoCheck()
+    {
+        return c.roll_no;
+    }
+
+    void getdatas()
+    {
+        c.getdatac();
+        cout << "Enter name:";
+        cin >> name;
+        cout << "Enter Date of birth:";
+        cin >> dob;
+        cout << "Enter Blood Group:";
+        cin >> bgrp;
+        cout << "Enter Contact Address:";
+        cin.ignore(); // Added to clear the newline character from the input buffer
+        getline(cin, contact_Address);
+        cout << "Enter Telephone Number:";
+        cin >> telephone_no;
+        cout << "Enter Driving License number:";
+        cin.ignore(); // Added to clear the newline character from the input buffer
+        getline(cin, drivingLicenseNo);
+        College::increment();
+    }
+
+    void display()
+    {
+        c.display();
+        cout << "Date of Birth is:" << dob << endl;
+        cout << "Blood Group is :" << bgrp << endl;
+        cout << "Contact Address is:" << contact_Address << endl;
+        cout << "Telephone Number:" << telephone_no << endl;
+        cout << "Driving License number:" << drivingLicenseNo << endl;
+        cout << "Total Number of student now " << College::strength << endl;
+    }
+
+    ~Student()
+    {
+        College::decrement();
+        cout << "Student with roll_no " << c.roll_no << " is deleted\n";
+        cout << "Total Number of student now " << College::strength << endl;
+    }
 };
-
-int PersonClass::count = 0;
-void PersonnelClass::InputData(PersonClass *obj)
-{
-    cout << "ROLLNO : ";
-    cin >> obj->roll;
-    cout << "NAME : ";
-   
-    cin.getline(obj->name, 40);
-    cout <<"CLASS : ";
-    cin >> obj->clas;
-    cout << "DIVISION : ";
-    cin >> obj->div;
-    cout << "DATE OF BIRTH(DD - MM - YYYY) : ";
-    cin >> obj->dob;
-    cout << "BLOOD GROUP : ";
-    cin >> obj->bloodgrp;
-    cout << "ADDRESS : ";
-    
-    cin.getline(this->address, 30);
-    cout << "Mobile NUMBER : ";
-    cin >> this->telephone_no;
-    cout << "DRIVING LICENSE NUMBER : ";
-    cin >> this->license_no;
-    cout << "POLICY NUMBER : ";
-    cin >> this->policy_no;
-    obj->count++;
-}
-
-void PersonnelClass::DisplayData(PersonClass *obj)
-{
-    cout<<"\nStudent Details: "<<endl;
-    cout <<"Roll No: "<< obj->roll <<endl;
-    cout<< "Name: " << obj->name <<endl;
-    cout<< "Class: " << obj->clas <<endl;
-    cout<< "Division: " << obj->div <<endl;
-    cout<< "Date of Birth: " << obj->dob <<endl;
-    cout<< "Address: " << this->address <<endl;
-    cout<<"Mobile:  " << this->telephone_no <<endl;
-    cout<< "Blood Group: " << obj->bloodgrp << endl;
-    cout<<"Driving License: " << this->license_no <<endl;
-    cout<< "Policy No: " << this->policy_no<<endl;
-}
 
 int main()
 {
-    PersonnelClass *a[10];
-    PersonClass *c[10];
-    int n = 0, i, choice;
-    char ans;
-    
-    do
-    {
-        cout << "\nMENU : ";
-        cout << "\n1.Input Data\n2.Display Data\n3.Exit"<<endl;
-        cout << "Enter your choice : ";
+    int n, i;
 
-        cin >> choice;
-        
-        switch (choice)
+    cout << "Enter Number of students :";
+    cin >> n;
+
+    Student *s1[15];
+
+    for (i = 0; i < n; i++)
+    {
+        cout << "\t\t" << i + 1 << endl;
+        s1[i] = new Student;
+        s1[i]->getdatas();
+    }
+
+    while (1)
+    {
+        int chc;
+
+        cout << "1.Display all Student details\n";
+        cout << "2.Delete a Particular student record\n";
+        cout << "3.Add another record \n";
+        cout << "4.End program\n";
+
+        cin >> chc;
+
+        switch (chc)
         {
         case 1:
-            cout << "ENTER THE DETAILS"<<endl;
-
-                a[n] = new PersonnelClass;
-                c[n] = new PersonClass;
-                a[n]->InputData(c[n]);
-                n++;
-                PersonClass::TotalRecordCount();
-               
+            for (int j = 0; j < n; j++)
+                s1[j]->display();
             break;
-        case 2:         
-            for (i = 0; i < n; i++){
-                a[i]->DisplayData(c[i]);
+
+        case 2:
+            int temroll;
+            cout << "Enter roll no of student you want to delete: ";
+            cin >> temroll;
+
+            for (int j = 0; j < n; j++)
+            {
+                if (s1[j]->rollNoCheck() == temroll)
+                {
+                    delete s1[j];
+                    // Shift elements to fill the empty space
+                    for (int k = j; k < n - 1; k++)
+                        s1[k] = s1[k + 1];
+                    n--;
+                    break;
+                }
             }
-            PersonClass::TotalRecordCount();
             break;
 
         case 3:
-            cout<<"Thank You...";
+            i++;
+            n++;
+            s1[i] = new Student;
+            s1[i]->getdatas();
+            break;
+
+        case 4:
+            return 0;
             break;
         }
-        
-        
-    } while (choice!=3);
-    
+    }
+
     return 0;
 }

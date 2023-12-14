@@ -8,7 +8,7 @@ void mydisplay()
   glTranslatef(0.0, 0.0, -10.0);
   // glScalef(2.0,2.0,0.0);
   // glRotatef(20.0,1.0,0.0,0.0);
-  glRotatef(-45.0, 0.0, 1.0, 0.0);
+  //glRotatef(-45.0, 0.0, 1.0, 0.0);
 
   glBegin(GL_QUADS);
   // front (red)
